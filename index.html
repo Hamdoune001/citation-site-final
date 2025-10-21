@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Citation du jour</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 20px;
+      flex-direction: column;
+    }
+    #quote {
+      font-size: 2em;
+      color: #333;
+      max-width: 800px;
+    }
+    #ads {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quote">Chargement...</div>
+
+  <script>
+    // Tableau de citations françaises
+    const quotes = [
+      "Le succès, c’est tomber sept fois, se relever huit.",
+      "La simplicité est la sophistication suprême.",
+      "Rien n’est impossible à celui qui essaye.",
+      "La vie commence là où commence ta zone de confort.",
+      "Fais de ta vie un rêve, et d’un rêve, une réalité.",
+      "Il n’y a qu’une façon d’échouer, c’est d’abandonner avant d’avoir réussi.",
+      "Le bonheur n’est pas quelque chose de prêt à l’emploi, il vient de vos propres actions."
+    ];
+
+    // Citation du jour
+    const today = new Date().getDate();
+    document.getElementById("quote").innerText = quotes[today % quotes.length];
+  </script>
+
+  <!-- Zone pub -->
+  <div id="ads">
+    <script async src="https://a-ads.com/script.js"></script>
+  </div>
+</body>
+</html>
