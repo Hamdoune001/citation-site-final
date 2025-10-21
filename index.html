@@ -3,22 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <title>Citation du jour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Citations françaises quotidiennes pour vous inspirer chaque jour.">
+  <meta name="keywords" content="citation, motivation, proverbe, français, inspiration">
   <style>
     body {
       font-family: Arial, sans-serif;
       display: flex;
-      height: 100vh;
+      flex-direction: column;
+      min-height: 100vh;
       justify-content: center;
       align-items: center;
       background: #f9f9f9;
-      text-align: center;
       padding: 20px;
-      flex-direction: column;
+      text-align: center;
+      transition: background 0.5s, color 0.5s;
+    }
+    body.dark {
+      background: #1a1a1a;
+      color: #f0f0f0;
     }
     #quote {
       font-size: 2em;
-      color: #333;
       max-width: 800px;
+      margin-bottom: 10px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    #quote.visible {
+      opacity: 1;
+    }
+    #author {
+      font-size: 1.2em;
+      color: inherit;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      margin: 5px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
     }
     #ads {
       margin-top: 40px;
@@ -27,27 +59,79 @@
 </head>
 <body>
   <div id="quote">Chargement...</div>
+  <div id="author"></div>
+  <div>
+    <button id="newQuote">Nouvelle citation</button>
+    <button id="toggleTheme">Mode sombre/clair</button>
+    <button id="shareTwitter">Partager Twitter</button>
+    <button id="shareWhatsApp">Partager WhatsApp</button>
+  </div>
 
-  <script>
-    // Tableau de citations françaises
-    const quotes = [
-      "Le succès, c’est tomber sept fois, se relever huit.",
-      "La simplicité est la sophistication suprême.",
-      "Rien n’est impossible à celui qui essaye.",
-      "La vie commence là où commence ta zone de confort.",
-      "Fais de ta vie un rêve, et d’un rêve, une réalité.",
-      "Il n’y a qu’une façon d’échouer, c’est d’abandonner avant d’avoir réussi.",
-      "Le bonheur n’est pas quelque chose de prêt à l’emploi, il vient de vos propres actions."
-    ];
-
-    // Citation du jour
-    const today = new Date().getDate();
-    document.getElementById("quote").innerText = quotes[today % quotes.length];
-  </script>
-
-  <!-- Zone pub -->
   <div id="ads">
     <script async src="https://a-ads.com/script.js"></script>
   </div>
+
+  <script>
+    const quotes = [
+      {text: "Le succès, c’est tomber sept fois, se relever huit.", author: "Proverbe"},
+      {text: "La simplicité est la sophistication suprême.", author: "Leonardo da Vinci"},
+      {text: "Rien n’est impossible à celui qui essaye.", author: "Alexandre Dumas"},
+      {text: "La vie commence là où commence ta zone de confort.", author: "Neale Donald Walsch"},
+      {text: "Fais de ta vie un rêve, et d’un rêve, une réalité.", author: "Antoine de Saint-Exupéry"},
+      {text: "Il n’y a qu’une façon d’échouer, c’est d’abandonner avant d’avoir réussi.", author: "Georges Clémenceau"},
+      {text: "Le bonheur n’est pas quelque chose de prêt à l’emploi, il vient de vos propres actions.", author: "Dalaï Lama"}
+    ];
+
+    const quoteDiv = document.getElementById("quote");
+    const authorDiv = document.getElementById("author");
+
+    // Affiche la citation du jour
+    function showDailyQuote() {
+      const today = new Date().getDate();
+      const quote = quotes[today % quotes.length];
+      displayQuote(quote);
+    }
+
+    // Affiche une citation aléatoire
+    function showRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const quote = quotes[randomIndex];
+      displayQuote(quote);
+    }
+
+    // Fonction pour afficher avec animation
+    function displayQuote(quote) {
+      quoteDiv.classList.remove("visible");
+      setTimeout(() => {
+        quoteDiv.innerText = quote.text;
+        authorDiv.innerText = `— ${quote.author}`;
+        quoteDiv.classList.add("visible");
+      }, 250);
+    }
+
+    // Bouton Nouvelle citation
+    document.getElementById("newQuote").addEventListener("click", showRandomQuote);
+
+    // Bouton Mode sombre / clair
+    document.getElementById("toggleTheme").addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
+    // Bouton Partager Twitter
+    document.getElementById("shareTwitter").addEventListener("click", () => {
+      const text = encodeURIComponent(`${quoteDiv.innerText} — ${authorDiv.innerText}`);
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+    });
+
+    // Bouton Partager WhatsApp
+    document.getElementById("shareWhatsApp").addEventListener("click", () => {
+      const text = encodeURIComponent(`${quoteDiv.innerText} — ${authorDiv.innerText}`);
+      window.open(`https://wa.me/?text=${text}`, "_blank");
+    });
+
+    // Initialisation
+    showDailyQuote();
+  </script>
 </body>
 </html>
+
